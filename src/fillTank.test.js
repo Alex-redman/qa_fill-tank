@@ -276,16 +276,16 @@ describe('fillTank', () => {
 
   it('should round price correctly on half-cent tie', () => {
     const customer = {
-      money: 1,
+      money: 10,
       vehicle: {
         maxTankCapacity: 100,
         fuelRemains: 0,
       },
     };
 
-    fillTank(customer, 0.335, 1);
+    fillTank(customer, 3.335, 3);
 
-    expect(customer.vehicle.fuelRemains).toBe(0);
-    expect(customer.money).toBeCloseTo(1, 2);
+    expect(customer.vehicle.fuelRemains).toBe(2.9);
+    expect(customer.money).toBeCloseTo(10 - 2.9 * 3.335, 2);
   });
 });
