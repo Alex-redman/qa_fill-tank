@@ -257,4 +257,35 @@ describe('fillTank', () => {
     expect(customer.vehicle.fuelRemains).toBe(0);
     expect(customer.money).toBe(15);
   });
+
+  it('should fill remaining capacity '
+    + 'if amount not provided and tank partially filled', () => {
+    const customer = {
+      money: 1000,
+      vehicle: {
+        maxTankCapacity: 100,
+        fuelRemains: 30,
+      },
+    };
+
+    fillTank(customer, 10);
+
+    expect(customer.vehicle.fuelRemains).toBe(100);
+    expect(customer.money).toBe(300);
+  });
+
+  it('should round price correctly on half-cent tie', () => {
+    const customer = {
+      money: 1,
+      vehicle: {
+        maxTankCapacity: 100,
+        fuelRemains: 0,
+      },
+    };
+
+    fillTank(customer, 0.335, 1);
+
+    expect(customer.vehicle.fuelRemains).toBe(0);
+    expect(customer.money).toBeCloseTo(1, 2);
+  });
 });
